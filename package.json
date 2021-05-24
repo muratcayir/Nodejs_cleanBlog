@@ -1,0 +1,27 @@
+{
+  "name": "cleanblog",
+  "version": "1.0.0",
+  "description": "clean blog",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/muratcayir/cleanBlog.git"
+  },
+  "keywords": [
+    "clean",
+    "blog",
+    "example"
+  ],
+  "author": "Murat ÇAYIR",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/muratcayir/cleanBlog/issues"
+  },
+  "homepage": "https://github.com/muratcayir/cleanBlog#readme",
+  "devDependencies": {
+    "prettier": "2.3.0"
+  }
+}
