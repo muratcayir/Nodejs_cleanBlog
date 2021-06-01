@@ -2,7 +2,11 @@ const express = require('express');
 const mongoose = require('mongoose');
 const path = require('path');
 const ejs = require('ejs');
-const Post = require('./models/Post');
+const methodOverride = require('method-override');
+const fileUpload = require('express-fileupload'); 
+const fs = require('fs');
+const postController = require('./controller/postController');
+const pageController = require('./controller/pageController');
 
 const app = express();
 
@@ -10,6 +14,7 @@ const app = express();
 mongoose.connect('mongodb://localhost/cleanblog-test-db', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  useFindAndModify:false,
 });
 
 //Template Engine
@@ -17,31 +22,25 @@ app.set('view engine', 'ejs');
 
 //MIDDLEWARES
 app.use(express.static('public'));
+app.use(express.urlencoded({ extended: true })); //URL okunmasını sağlıyor
+app.use(express.json()); // Datayı JSON formatına çeviriyor
+app.use(fileUpload()); // middleware olarak kaydediyoruz.
+app.use(methodOverride('_method', { methods: ['POST', 'GET'] }));
 
 //ROUTES
 
-app.get('/', async (req, res) => {
-  const posts = await Post.find({});
-  res.render('index', {
-     posts });
-});
+app.get('/', postController.getAllPosts);
+app.get('/posts/:id',postController.getPost);
+app.post('/posts', postController.createPost);
+app.delete('/posts/:id',postController.deletePost );
+app.put('/posts/:id', postController.updatePost);
+app.get('/about',pageController.getAboutPage);
+app.get('/post',pageController.getPostPage);
+app.get('/add_post',pageController.getAddPost);
+app.get('/posts/edit/:id', pageController.getEditPage);
 
-app.get('/about', (req, res) => {
-  res.render('about');
-});
 
-app.get('/post', (req, res) => {
-  res.render('post');
-});
 
-app.get('/add_post', (req, res) => {
-  res.render('add_post');
-});
-
-app.post('/posts', async (req, res) => { // async - await yapısı kullanacğız.
-  await Post.create(req.body)            // body bilgisini Post modeli sayesinde veritabanında dökümana dönüştürüyoruz.
-  res.redirect('/')
-});
 
 const port = 5000;
 app.listen(port, () => {
