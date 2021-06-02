@@ -11,11 +11,16 @@ const pageController = require('./controller/pageController');
 const app = express();
 
 //
-mongoose.connect('mongodb://localhost/cleanblog-test-db', {
+mongoose.connect('mongodb+srv://murat:sDa9Uk79C41o3qtl@cluster0.i3z09.mongodb.net/cleanblogs-db?retryWrites=true&w=majority', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify:false,
-});
+}).then(()=>{
+  console.log("db connected")
+}).catch((error)=>
+{
+  console.log(error)
+})
 
 //Template Engine
 app.set('view engine', 'ejs');
