@@ -11,7 +11,7 @@ const pageController = require('./controller/pageController');
 const app = express();
 
 //
-mongoose.connect('mongodb+srv://murat:sDa9Uk79C41o3qtl@cluster0.i3z09.mongodb.net/cleanblogs-db?retryWrites=true&w=majority', {
+mongoose.connect('mongodb+srv://murat:wPZMj3mnxzzOBNpj@cluster.r5rto.mongodb.net/cleanblogs-db?retryWrites=true&w=majority', {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useFindAndModify:false,
@@ -47,7 +47,7 @@ app.get('/posts/edit/:id', pageController.getEditPage);
 
 
 
-const port = 5000;
+const port =process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`Sunucu ${port} portunda başlatıldı..`);
 });
